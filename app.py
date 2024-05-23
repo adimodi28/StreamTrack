@@ -20,8 +20,8 @@ spreadsheet = client.open("Streamlit_track")
 
 # User credentials (for demonstration purposes; replace with a secure method in production)
 user_data = {
-    "adit": "shruti",
-    "vikram": "rikita"
+    "user1": "password1",
+    "user2": "password2"
 }
 
 # Simple authentication
