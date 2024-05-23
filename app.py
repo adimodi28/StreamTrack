@@ -113,7 +113,7 @@ def delete_entry(username):
     ref_id = st.selectbox("Select Reference ID to delete", df['Reference ID'].values)
     
     if st.button("Delete Entry"):
-        if ref_id in df['Reference ID'].values:
+        if ref_id in df['Reference ID'].values):
             idx = df.index[df['Reference ID'] == ref_id].tolist()[0] + 2
             sheet.delete_row(idx)
             st.success("Entry deleted successfully.")
