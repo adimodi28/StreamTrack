@@ -14,7 +14,10 @@ WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt .
 
-# Install the dependencies
+# Install numpy first
+RUN pip install numpy==1.21.6
+
+# Install the rest of the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Verify Altair installation
