@@ -1,5 +1,5 @@
-import os
 import json
+import os
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -8,8 +8,11 @@ from datetime import datetime
 import uuid
 
 # Load credentials from environment variable
-credentials_dict = json.loads(os.getenv('GCP_SERVICE_ACCOUNT'))
+gcp_service_account_json = os.getenv("GCP_SERVICE_ACCOUNT")
+if gcp_service_account_json is None:
+    raise ValueError("GCP_SERVICE_ACCOUNT environment variable not set")
 
+credentials_dict = json.loads(gcp_service_account_json)
 creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict)
 
 # Google Sheets authentication
@@ -20,8 +23,9 @@ spreadsheet = client.open("Streamlit_track")
 
 # User credentials (for demonstration purposes; replace with a secure method in production)
 user_data = {
-    "user1": "password1",
-    "user2": "password2"
+    "adit": "shruti",
+    "vikram": "rikita",
+    "ghanshyam": "jalpa"
 }
 
 # Simple authentication
@@ -113,7 +117,7 @@ def delete_entry(username):
     ref_id = st.selectbox("Select Reference ID to delete", df['Reference ID'].values)
     
     if st.button("Delete Entry"):
-        if ref_id in df['Reference ID'].values):
+        if ref_id in df['Reference ID'].values:
             idx = df.index[df['Reference ID'] == ref_id].tolist()[0] + 2
             sheet.delete_row(idx)
             st.success("Entry deleted successfully.")
@@ -156,6 +160,11 @@ def main():
 
         menu = ["Add Entry", "Read Entries", "Update Entry", "Delete Entry", "Generate Report"]
         choice = st.sidebar.selectbox("Menu", menu)
+
+        if st.sidebar.button("Logout"):
+            st.session_state.logged_in = False
+            st.session_state.username = None
+            st.sidebar.success("You have been logged out.")
 
         if choice == "Add Entry":
             add_entry(st.session_state.username)
