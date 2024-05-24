@@ -17,6 +17,9 @@ COPY requirements.txt .
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Verify Altair installation
+RUN python -c "import altair; print(altair.__version__)"
+
 # Copy the rest of the application code into the container
 COPY . .
 
